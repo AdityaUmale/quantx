@@ -1,14 +1,13 @@
 import dbConnect from "@/app/lib/db";
 import User from "@/app/lib/models/User";
 import bcrypt from "bcryptjs";
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: Request, res: Response) {
     try {
-        dbConnect();
-        const { email, password } = req.body;
+        await dbConnect();
+        const { email, password } = await req.json();
         if (!email || !password) {
             return res.status(400).json({ message: 'Please provide all the required fields' });
         }

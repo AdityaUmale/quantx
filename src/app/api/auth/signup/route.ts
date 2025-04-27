@@ -5,10 +5,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
 
-export async function POST(req: NextApiRequest, res: NextApiResponse){
+export async function POST(req: Request, res: Response){
     try {
-        dbConnect();
-        const {username, email, password} = req.body;
+        await dbConnect();
+        const {username, email, password} = await req.json();
         if (!username || !email || !password) {
             return res.status(400).json({message: 'Please provide all the required fields'});
         }
